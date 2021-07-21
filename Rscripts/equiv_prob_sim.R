@@ -1,7 +1,9 @@
 # Purpose: Simulation to validate the equivalence probability calculation.
-library(dplyr)
-library(optparse)
-source("Rscripts/empirical_equiv_prob.R")
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(optparse)
+  source("Rscripts/empirical_equiv_prob.R")
+})
 
 # -----------------------------------------------------------------------------
 # Unpack simulation settings.
@@ -55,12 +57,13 @@ file_id <- paste0(
 )
 
 # Report.
+cat("\n\n")
 cat("Starting equivalence probability simulation with these settings:\n")
 cat("Shape 1: ", params$shape1, ",\t", sep = "")
 cat("Rate 1: ", params$rate1, ",\t", sep = "")
 cat("Shape 2: ", params$shape2, ",\t", sep = "")
 cat("Rate 2: ", params$rate2, ",\t", sep = "")
-cat("Censoring: ", params$cens, ".\t", sep = "")
+cat("Censoring: ", params$cens, ",\t", sep = "")
 cat("Margin: ", params$marg, ".\t", sep = "")
 cat("\n")
 
@@ -109,13 +112,12 @@ power <- do.call(rbind, power)
 
 # Output.
 z <- stats::qnorm(0.975)
-power <- power %>%
+out <- power %>%
   dplyr::mutate(
-    sim_se = sqrt(simulation * (1 - sim) / params$reps),
+    sim_se = sqrt(simulation * (1 - simulation) / params$reps),
     sim_lower = simulation - z * sim_se,
     sim_upper = simulation + z * sim_se,
     cens_prop = params$cens,
-    n = params$n,
     shape1 = params$shape1,
     rate1 = params$rate1,
     shape2 = params$shape2,

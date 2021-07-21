@@ -19,6 +19,6 @@ do
 	--rate2 ${rate2} \
 	--cens ${cens} \
 	--marg ${marg} \
-	--reps 1000 \
+	--reps 500 \
 	--out "Simulations/EquivProb";
 done

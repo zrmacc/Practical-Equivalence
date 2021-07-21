@@ -5,4 +5,4 @@ R package performing sample size calculation for the practical equivalence desig
 Simulation code.
 
 # Simulations.
-sh OrderSim.sh
+sh EquivProbSim.sh

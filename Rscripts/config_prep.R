@@ -1,54 +1,37 @@
 # Purpose: Prepare simulation configuration.
-# Updated: 2021-05-27
+# Updated: 2021-07-20
 
 # -----------------------------------------------------------------------------
-# Testing config.
+# Equivalence probability simulations.
 # -----------------------------------------------------------------------------
 
-# Sample sizes.
-n <- c(5, 10)
+# Shape.
+shape1 <- 1.0
+shape2 <- 1.0
 
-# Median in arm 1.
-med1 <- 1.0
-
-# Median in arm 2.
-med2 <- 1.2
+# Rate.
+rate1 <- c(1.0, 1.5, 2.0)
+rate2 <- 1.0
 
 # Censoring proportion.
 cens <- c(0, 0.25)
 
+# Margin.
+marg <- c(0, 0.25)
+
 # Configuration frame.
-config <- expand.grid(n, med1, med2, cens)
-colnames(config) <- c("n", "med1", "med2", "cens")
+config <- expand.grid(
+  shape1 = shape1,
+  shape2 = shape2,
+  rate1 = rate1,
+  rate2 = rate2,
+  cens = cens,
+  marg = marg
+)
 
 data.table::fwrite(
   x = config,
-  file = "Configs/Testing.txt",
+  file = "Configs/EquivProb.txt",
   sep = "\t"
 )
 
-# -----------------------------------------------------------------------------
-# Order probability simulations.
-# -----------------------------------------------------------------------------
-
-# Sample sizes.
-n <- seq(from = 5, to = 50, by = 5)
-
-# Median in arm 1.
-med1 <- 1.0
-
-# Median in arm 2.
-med2 <- seq(from = 1.0, to = 2.0, by = 0.2)
-
-# Censoring proportion.
-cens <- seq(from = 0.0, to = 0.5, by = 0.1)
-
-# Configuration frame.
-config <- expand.grid(n, med1, med2, cens)
-colnames(config) <- c("n", "med1", "med2", "cens")
-
-data.table::fwrite(
-  x = config,
-  file = "Configs/OrderProp.txt",
-  sep = "\t"
-)

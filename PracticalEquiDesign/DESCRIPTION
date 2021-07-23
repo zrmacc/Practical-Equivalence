@@ -1,6 +1,6 @@
 Package: PracticalEquiDesign
 Title: Design of Practical Equivalence Trials
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: 
     person(given = "Zachary",
            family = "McCaw",
@@ -14,10 +14,14 @@ Encoding: UTF-8
 LazyData: true
 Imports:
 	dplyr,
+	ggplot2,
 	methods,
+	numDeriv,
 	stats,
+	Temporal,
 	tidyr
 RoxygenNote: 7.1.1
 Suggests: 
-    testthat (>= 3.0.0)
+	testthat (>= 3.0.0),
+	withr
 Config/testthat/edition: 3

@@ -4,24 +4,42 @@
 \alias{EquiProb}
 \title{Practical Equivalence Probability}
 \usage{
-EquiProb(cens_prop, n, rate1, rate2, shape1, shape2, margin = 0, reps = 10)
+EquiProb(
+  cens_prop,
+  n,
+  med1 = NULL,
+  shape1 = NULL,
+  rate1 = NULL,
+  med2 = NULL,
+  shape2 = NULL,
+  rate2 = NULL,
+  info_reps = 50,
+  margin = 0
+)
 }
 \arguments{
 \item{cens_prop}{Expected censoring proportion.}
 
 \item{n}{Sample size.}
 
-\item{rate1}{Rate parameter for arm 1.}
-
-\item{rate2}{Rate parameter for arm 2.}
+\item{med1}{Median for treatment arm 1, assuming shape1 is 1. Overwrites
+shape and rate if supplied.}
 
 \item{shape1}{Shape parameter for arm 1.}
 
+\item{rate1}{Rate parameter for arm 1.}
+
+\item{med2}{Median for treatment arm 2, assuming shape2 is 1. Overwrites
+shape and rate if supplied.}
+
 \item{shape2}{Shape parameter for arm 2.}
 
-\item{margin}{Equivlence margin.}
+\item{rate2}{Rate parameter for arm 2.}
 
-\item{reps}{Simulation replicates.}
+\item{info_reps}{Replicates used for estimating the observed information
+matrix.}
+
+\item{margin}{Margin of practical equivalence.}
 }
 \value{
 Numeric equivalence probability.

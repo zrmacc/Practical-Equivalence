@@ -127,38 +127,69 @@ WeiMedSE <- function(info, n, shape, rate) {
 #' 
 #' @param cens_prop Expected censoring proportion.
 #' @param n Sample size.
-#' @param rate1 Rate parameter for arm 1.
-#' @param rate2 Rate parameter for arm 2.
+#' @param med1 Median for treatment arm 1, assuming shape1 is 1. Overwrites
+#'   shape and rate if supplied.
 #' @param shape1 Shape parameter for arm 1.
+#' @param rate1 Rate parameter for arm 1.
+#' @param med2 Median for treatment arm 2, assuming shape2 is 1. Overwrites
+#'   shape and rate if supplied.
 #' @param shape2 Shape parameter for arm 2.
-#' @param margin Equivlence margin.
-#' @param reps Simulation replicates. 
+#' @param rate2 Rate parameter for arm 2.
+#' @param info_reps Replicates used for estimating the observed information
+#'   matrix.
+#' @param margin Margin of practical equivalence.
 #' @return Numeric equivalence probability.
 #' @export 
 
 EquiProb <- function(
   cens_prop,
   n,
-  rate1,
-  rate2,
-  shape1,
-  shape2,
-  margin = 0,
-  reps = 10
+  med1 = NULL,
+  shape1 = NULL,
+  rate1 = NULL,
+  med2 = NULL,
+  shape2 = NULL,
+  rate2 = NULL,
+  info_reps = 50,
+  margin = 0
 ) {
  
+  # Convert medians to rates, if supplied.
+  if (!is.null(med1)) {
+    shape1 <- 1
+    rate1 <- log(2) / med1
+  } else {
+    med1 <- WeiMed(shape = shape1, rate = rate1)
+  }
+  if (!is.null(med2)) {
+    shape2 <- 1
+    rate2 <- log(2) / med2
+  } else {
+    med2 <- WeiMed(shape = shape2, rate = rate2)
+  }
+  
   # Arm 1.
-  me1 <- WeiMed(shape1, rate1)
-  info1 <- WeiAvgInfo(cens_prop, n, shape1, rate1, reps)
-  se1 <- WeiMedSE(info1, n, shape1, rate1)
+  info1 <- WeiAvgInfo(
+    cens_prop = cens_prop, 
+    n = n, 
+    shape = shape1, 
+    rate = rate1, 
+    reps = info_reps
+  )
+  se1 <- WeiMedSE(info = info1, n = n, shape = shape1, rate = rate1)
   
   # Arm 2.
-  me2 <- WeiMed(shape2, rate2)
-  info2 <- WeiAvgInfo(cens_prop, n, shape2, rate2, reps)
-  se2 <- WeiMedSE(info2, n, shape2, rate2)
+  info2 <- WeiAvgInfo(
+    cens_prop = cens_prop, 
+    n = n, 
+    shape = shape2, 
+    rate = rate2, 
+    reps = info_reps
+  )
+  se2 <- WeiMedSE(info = info2, n = n, shape = shape2, rate = rate2)
   
   # SE of the difference.
-  delta <- me2 - me1
+  delta <- med2 - med1
   se12 <- sqrt(se1^2 + se2^2)
   
   # Equivalence probability.

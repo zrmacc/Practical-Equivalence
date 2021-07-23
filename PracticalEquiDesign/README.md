@@ -78,7 +78,7 @@ q <- ProbCurve(
 show(q)
 ```
 
-<img src="README_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="README_files/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 By default, the margin of equivalence is zero. The following example specifies a practical equivalence margin of 1 month. 
 

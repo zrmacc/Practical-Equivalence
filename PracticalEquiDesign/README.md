@@ -1,6 +1,6 @@
 # Practical Equivalence Design
 
-Zachary R. McCaw <br>
+Zachary McCaw <br>
 Updated: 2021-07-22
 
 
@@ -24,30 +24,30 @@ devtools::install_github(repo = 'zrmacc/Practical-Equivalence/PracticalEquiDesig
 
 
 ## Examples
-Sample size calculation for a median survival time of 6 months in the reference arm and 8 months in the reference arm, with an estimated censoring rate of 20% and a 90% chance of selecting the more-effective treatment.
+Sample size calculation for a median survival time of 6 months in the reference arm and 8 months in the treatment arm, with an estimated censoring rate of 20% and a 80% chance of selecting the more-effective treatment.
 
 
 ```r
-set.seed(102)
+set.seed(101)
 library(PracticalEquiDesign)
 n <- SampleSize(
   med1 = 6,
   med2 = 8,
   cens_prop = 0.2,
-  target_prob = 0.9
+  target_prob = 0.8
 )
 sprintf("Sample size: %d.", n)
 ```
 
 ```
-## [1] "Sample size: 60."
+## [1] "Sample size: 26."
 ```
 
 Probability of selecting the more-effective treatment at the recommended sample size.
 
 
 ```r
-set.seed(102)
+set.seed(101)
 prob <- EquiProb(
   n = n,
   med1 = 6,
@@ -58,14 +58,14 @@ sprintf("Probability of selecting the more-effective treatment: %.3f.", prob)
 ```
 
 ```
-## [1] "Probability of selecting the more-effective treatment: 0.900."
+## [1] "Probability of selecting the more-effective treatment: 0.804."
 ```
 
 Selection probability as a function of the sample size:
 
 
 ```r
-set.seed(102)
+set.seed(101)
 q <- ProbCurve(
   med1 = 6,
   med2 = 8,
@@ -73,9 +73,28 @@ q <- ProbCurve(
   delta = 5,
   min_n = 10,
   max_n = 100,
-  target_prob = 0.9
+  target_prob = 0.8
 )
 show(q)
 ```
 
-![](README_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+<img src="README_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+
+By default, the margin of equivalence is zero. The following example specifies a practical equivalence margin of 1 month. 
+
+
+```r
+set.seed(101)
+n <- SampleSize(
+  med1 = 6,
+  med2 = 8,
+  cens_prop = 0.2,
+  margin = 1,
+  target_prob = 0.8
+)
+sprintf("Sample size: %d.", n)
+```
+
+```
+## [1] "Sample size: 33."
+```

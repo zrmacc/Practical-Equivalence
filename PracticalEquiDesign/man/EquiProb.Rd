@@ -14,7 +14,8 @@ EquiProb(
   shape2 = NULL,
   rate2 = NULL,
   info_reps = 50,
-  margin = 0
+  margin = 0,
+  use_exp_calc = TRUE
 )
 }
 \arguments{
@@ -22,14 +23,14 @@ EquiProb(
 
 \item{n}{Sample size.}
 
-\item{med1}{Median for treatment arm 1, assuming shape1 is 1. Overwrites
+\item{med1}{Median for treatment arm 1, assuming shape1 = 1. Overwrites
 shape and rate if supplied.}
 
 \item{shape1}{Shape parameter for arm 1.}
 
 \item{rate1}{Rate parameter for arm 1.}
 
-\item{med2}{Median for treatment arm 2, assuming shape2 is 1. Overwrites
+\item{med2}{Median for treatment arm 2, assuming shape2 = 1. Overwrites
 shape and rate if supplied.}
 
 \item{shape2}{Shape parameter for arm 2.}
@@ -40,6 +41,10 @@ shape and rate if supplied.}
 matrix.}
 
 \item{margin}{Margin of practical equivalence.}
+
+\item{use_exp_calc}{If both shape parameters are 1, should the calculations
+be performed assuming an exponential distribution for the time to event in
+each arm?}
 }
 \value{
 Numeric equivalence probability.

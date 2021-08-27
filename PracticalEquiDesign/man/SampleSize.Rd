@@ -16,7 +16,8 @@ SampleSize(
   min_n = 10,
   max_n = 100,
   margin = 0,
-  target_prob = 0.8
+  target_prob = 0.8,
+  use_exp_calc = TRUE
 )
 }
 \arguments{
@@ -46,6 +47,10 @@ matrix.}
 \item{margin}{Margin of practical equivalence.}
 
 \item{target_prob}{Probability of selecting the more effective treatment.}
+
+\item{use_exp_calc}{If both shape parameters are 1, should the calculations
+be performed assuming an exponential distribution for the time to event in
+each arm?}
 }
 \value{
 Integer sample size.

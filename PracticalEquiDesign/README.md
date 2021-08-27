@@ -1,7 +1,7 @@
 # Practical Equivalence Design
 
 Zachary McCaw <br>
-Updated: 2021-07-22
+Updated: 2021-08-26
 
 
 
@@ -40,7 +40,7 @@ sprintf("Sample size: %d.", n)
 ```
 
 ```
-## [1] "Sample size: 26."
+## [1] "Sample size: 23."
 ```
 
 Probability of selecting the more-effective treatment at the recommended sample size.
@@ -58,7 +58,7 @@ sprintf("Probability of selecting the more-effective treatment: %.3f.", prob)
 ```
 
 ```
-## [1] "Probability of selecting the more-effective treatment: 0.804."
+## [1] "Probability of selecting the more-effective treatment: 0.805."
 ```
 
 Selection probability as a function of the sample size:
@@ -78,7 +78,7 @@ q <- ProbCurve(
 show(q)
 ```
 
-<img src="README_files/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+![](README_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 By default, the margin of equivalence is zero. The following example specifies a practical equivalence margin of 1 month. 
 
@@ -96,5 +96,5 @@ sprintf("Sample size: %d.", n)
 ```
 
 ```
-## [1] "Sample size: 33."
+## [1] "Sample size: 28."
 ```

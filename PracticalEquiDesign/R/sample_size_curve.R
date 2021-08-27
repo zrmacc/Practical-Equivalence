@@ -19,6 +19,9 @@
 #' @param min_n Minimum allowable sample size.
 #' @param max_n Maximum allowable sample size.
 #' @param target_prob Probability of selecting the more effective treatment.
+#' @param use_exp_calc If both shape parameters are 1, should the calculations
+#'   be performed assuming an exponential distribution for the time to event in
+#'   each arm?
 #' @return ggplot object.
 #' @importFrom ggplot2 aes
 #' @export
@@ -36,7 +39,8 @@ ProbCurve <- function(
   min_n = 10,
   max_n = 100,
   margin = 0.0,
-  target_prob = 0.8
+  target_prob = 0.8,
+  use_exp_calc = TRUE
 ) {
   
   # Convert medians to rates, if supplied.
@@ -68,7 +72,8 @@ ProbCurve <- function(
       shape2 = shape2,
       rate2 = rate2,
       margin = margin,
-      info_reps = info_reps
+      info_reps = info_reps,
+      use_exp_calc = use_exp_calc
     )
     return(out)
   }

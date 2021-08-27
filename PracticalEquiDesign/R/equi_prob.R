@@ -37,6 +37,7 @@ WeiMed <- function(shape, rate) {
 #' @param shape Shape parameter, alpha.
 #' @param rate Rate parameter, lambda.
 #' @return Numeric information matrix for shape and rate.
+#' @noRd 
 
 WeiInfo <- function(
   data,
@@ -90,6 +91,7 @@ WeiInfo <- function(
 #' @param rate Rate parameter `lambda`.
 #' @param reps Replicates to average.
 #' @return Numeric information matrix for shape and rate.
+#' @noRd 
 
 WeiAvgInfo <- function(cens_prop, n, shape, rate, reps = 10) {
   sim <- lapply(seq_len(reps), function(x) {
@@ -102,6 +104,20 @@ WeiAvgInfo <- function(cens_prop, n, shape, rate, reps = 10) {
 }
 
 
+#' Exponential Median SE
+#' 
+#' @param cens_prop Expected censoring proportion.
+#' @param n Sample size.
+#' @param rate Rate parameter `lambda`.
+#' @return Numeric standard error of the median.
+#' @noRd
+
+ExpMedSE <- function(cens_prop, n, rate) {
+  se2 <- log(2)^2 / (n * rate^2 * (1 - cens_prop))
+  return(sqrt(se2))
+}
+
+
 #' Weibull Median SE
 #' 
 #' @param info Information matrix.
@@ -109,6 +125,7 @@ WeiAvgInfo <- function(cens_prop, n, shape, rate, reps = 10) {
 #' @param shape Shape parameter `alpha`.
 #' @param rate Rate parameter `lambda`.
 #' @return Numeric standard error of the median.
+#' @noRd
 
 WeiMedSE <- function(info, n, shape, rate) {
   grad <- c(
@@ -127,17 +144,20 @@ WeiMedSE <- function(info, n, shape, rate) {
 #' 
 #' @param cens_prop Expected censoring proportion.
 #' @param n Sample size.
-#' @param med1 Median for treatment arm 1, assuming shape1 is 1. Overwrites
+#' @param med1 Median for treatment arm 1, assuming shape1 = 1. Overwrites
 #'   shape and rate if supplied.
 #' @param shape1 Shape parameter for arm 1.
 #' @param rate1 Rate parameter for arm 1.
-#' @param med2 Median for treatment arm 2, assuming shape2 is 1. Overwrites
+#' @param med2 Median for treatment arm 2, assuming shape2 = 1. Overwrites
 #'   shape and rate if supplied.
 #' @param shape2 Shape parameter for arm 2.
 #' @param rate2 Rate parameter for arm 2.
 #' @param info_reps Replicates used for estimating the observed information
 #'   matrix.
 #' @param margin Margin of practical equivalence.
+#' @param use_exp_calc If both shape parameters are 1, should the calculations
+#'   be performed assuming an exponential distribution for the time to event in
+#'   each arm?
 #' @return Numeric equivalence probability.
 #' @export 
 
@@ -151,7 +171,8 @@ EquiProb <- function(
   shape2 = NULL,
   rate2 = NULL,
   info_reps = 50,
-  margin = 0
+  margin = 0,
+  use_exp_calc = TRUE
 ) {
  
   # Convert medians to rates, if supplied.
@@ -168,25 +189,38 @@ EquiProb <- function(
     med2 <- WeiMed(shape = shape2, rate = rate2)
   }
   
-  # Arm 1.
-  info1 <- WeiAvgInfo(
-    cens_prop = cens_prop, 
-    n = n, 
-    shape = shape1, 
-    rate = rate1, 
-    reps = info_reps
-  )
-  se1 <- WeiMedSE(info = info1, n = n, shape = shape1, rate = rate1)
-  
-  # Arm 2.
-  info2 <- WeiAvgInfo(
-    cens_prop = cens_prop, 
-    n = n, 
-    shape = shape2, 
-    rate = rate2, 
-    reps = info_reps
-  )
-  se2 <- WeiMedSE(info = info2, n = n, shape = shape2, rate = rate2)
+  # If both arms have shape == 1, employ exponential calculation.
+  if (all(shape1 == 1, shape2 == 1, use_exp_calc)) {
+    
+    # Arm 1. 
+    se1 <- ExpMedSE(cens_prop = cens_prop, n = n, rate = rate1)
+    
+    # Arm 2.
+    se2 <- ExpMedSE(cens_prop = cens_prop, n = n, rate = rate2)
+
+  } else {
+    
+    # Arm 1.
+    info1 <- WeiAvgInfo(
+      cens_prop = cens_prop, 
+      n = n, 
+      shape = shape1, 
+      rate = rate1, 
+      reps = info_reps
+    )
+    se1 <- WeiMedSE(info = info1, n = n, shape = shape1, rate = rate1)
+    
+    # Arm 2.
+    info2 <- WeiAvgInfo(
+      cens_prop = cens_prop, 
+      n = n, 
+      shape = shape2, 
+      rate = rate2, 
+      reps = info_reps
+    )
+    se2 <- WeiMedSE(info = info2, n = n, shape = shape2, rate = rate2)
+    
+  }
   
   # SE of the difference.
   delta <- med2 - med1

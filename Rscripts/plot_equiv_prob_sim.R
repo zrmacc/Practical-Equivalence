@@ -24,13 +24,13 @@ PlotTitle <- function(data) {
   df <- data %>%
     dplyr::select(cens_prop, shape1, shape2, rate1, rate2, margin) %>%
     dplyr::distinct()
+  med1 <- PracticalEquiDesign::WeiMed(df$shape1, df$rate1)
+  med2 <- PracticalEquiDesign::WeiMed(df$shape2, df$rate2)
   title <- bquote(
     Censor==.(df$cens_prop)*","
     ~Margin==.(df$margin)*","
-    ~alpha[1]==.(df$shape1)*","
-    ~lambda[1]==.(df$rate1)*","
-    ~alpha[2]==.(df$shape2)*","
-    ~lambda[2]==.(df$rate2)*"."
+    ~Med[1]==.(med1)*","
+    ~Med[2]==.(med2)*"."
   )
   return(title)
 }
@@ -88,10 +88,11 @@ PlotEquiProbSim <- function(
 
 
 # -----------------------------------------------------------------------------
-# Panel.
+# Exponential: No difference.
 # -----------------------------------------------------------------------------
 
-files <- file.path("Simulations/EquivProb", dir(path = "Simulations/EquivProb/"))
+files <- file.path("Simulations/ExpNoDiff", dir(path = "Simulations/ExpNoDiff/"))
+
 plot_list <- lapply(files, function(file) {
   data <- readRDS(file)
   if (is.null(data$n)) {data$n <- seq(from = 5, to = 100, by = 5)}
@@ -102,18 +103,196 @@ plot_list <- lapply(files, function(file) {
   )
   return(q)
 })
+
 plot_panel <- cowplot::plot_grid(
   plotlist = plot_list,
-  byrow = FALSE,
-  ncol = 3
+  byrow = TRUE,
+  ncol = 2
 )
+
 cowplot::ggsave2(
-  file = "Figures/weibull_equiv_prob_sim_01.png",
+  file = "Figures/exp_no_diff.png",
   plot = plot_panel,
   device = "png",
-  width = 9,
-  height = 6,
+  width = 8,
+  height = 4,
   units = "in",
   scale = 2,
   dpi = 480
 )
+
+
+# -----------------------------------------------------------------------------
+# Weibull: No difference.
+# -----------------------------------------------------------------------------
+
+files <- file.path("Simulations/WeiNoDiff", dir(path = "Simulations/WeiNoDiff/"))
+
+plot_list <- lapply(files, function(file) {
+  data <- readRDS(file)
+  if (is.null(data$n)) {data$n <- seq(from = 5, to = 100, by = 5)}
+  q <- PlotEquiProbSim(
+    data, 
+    title = PlotTitle(data),
+    y_lim = c(0, 1)
+  )
+  return(q)
+})
+
+plot_panel <- cowplot::plot_grid(
+  plotlist = plot_list,
+  byrow = TRUE,
+  ncol = 2
+)
+
+cowplot::ggsave2(
+  file = "Figures/wei_no_diff.png",
+  plot = plot_panel,
+  device = "png",
+  width = 8,
+  height = 4,
+  units = "in",
+  scale = 2,
+  dpi = 480
+)
+
+
+# -----------------------------------------------------------------------------
+# Exponential: 1 month difference.
+# -----------------------------------------------------------------------------
+
+files <- file.path("Simulations/ExpDiff1", dir(path = "Simulations/ExpDiff1/"))
+
+plot_list <- lapply(files, function(file) {
+  data <- readRDS(file)
+  if (is.null(data$n)) {data$n <- seq(from = 5, to = 100, by = 5)}
+  q <- PlotEquiProbSim(
+    data, 
+    title = PlotTitle(data),
+    y_lim = c(0, 1)
+  )
+  return(q)
+})
+
+plot_panel <- cowplot::plot_grid(
+  plotlist = plot_list,
+  byrow = TRUE,
+  ncol = 2
+)
+
+cowplot::ggsave2(
+  file = "Figures/exp_diff_1.png",
+  plot = plot_panel,
+  device = "png",
+  width = 8,
+  height = 4,
+  units = "in",
+  scale = 2,
+  dpi = 480
+)
+
+
+# -----------------------------------------------------------------------------
+# Weibull: 1 month difference.
+# -----------------------------------------------------------------------------
+
+files <- file.path("Simulations/WeiDiff1", dir(path = "Simulations/WeiDiff1/"))
+
+plot_list <- lapply(files, function(file) {
+  data <- readRDS(file)
+  if (is.null(data$n)) {data$n <- seq(from = 5, to = 100, by = 5)}
+  q <- PlotEquiProbSim(
+    data, 
+    title = PlotTitle(data),
+    y_lim = c(0, 1)
+  )
+  return(q)
+})
+
+plot_panel <- cowplot::plot_grid(
+  plotlist = plot_list,
+  byrow = TRUE,
+  ncol = 2
+)
+
+cowplot::ggsave2(
+  file = "Figures/wei_diff_1.png",
+  plot = plot_panel,
+  device = "png",
+  width = 8,
+  height = 4,
+  units = "in",
+  scale = 2,
+  dpi = 480
+)
+
+
+# -----------------------------------------------------------------------------
+# Exponential: 3 month difference.
+# -----------------------------------------------------------------------------
+
+files <- file.path("Simulations/ExpDiff3", dir(path = "Simulations/ExpDiff3/"))
+
+plot_list <- lapply(files, function(file) {
+  data <- readRDS(file)
+  if (is.null(data$n)) {data$n <- seq(from = 5, to = 100, by = 5)}
+  q <- PlotEquiProbSim(
+    data, 
+    title = PlotTitle(data),
+    y_lim = c(0, 1)
+  )
+  return(q)
+})
+
+plot_panel <- cowplot::plot_grid(
+  plotlist = plot_list,
+  byrow = TRUE,
+  ncol = 2
+)
+
+cowplot::ggsave2(
+  file = "Figures/exp_diff_3.png",
+  plot = plot_panel,
+  device = "png",
+  width = 8,
+  height = 4,
+  units = "in",
+  scale = 2,
+  dpi = 480
+)
+
+
+# -----------------------------------------------------------------------------
+# Weibull: 3 month difference.
+# -----------------------------------------------------------------------------
+
+files <- file.path("Simulations/WeiDiff3", dir(path = "Simulations/WeiDiff3/"))
+
+plot_list <- lapply(files, function(file) {
+  data <- readRDS(file)
+  if (is.null(data$n)) {data$n <- seq(from = 5, to = 100, by = 5)}
+  q <- PlotEquiProbSim(
+    data, 
+    title = PlotTitle(data),
+    y_lim = c(0, 1)
+  )
+  return(q)
+})
+
+plot_panel <- cowplot::plot_grid(
+  plotlist = plot_list,
+  byrow = TRUE,
+  ncol = 2
+)
+
+cowplot::ggsave2(
+  file = "Figures/wei_diff_3.png",
+  plot = plot_panel,
+  device = "png",
+  width = 8,
+  height = 4,
+  units = "in",
+  scale = 2,
+  dpi = 480
+)
+

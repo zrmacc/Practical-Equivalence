@@ -48,9 +48,9 @@ params <- parse_args(object = parsed_opts)
 # Output stem.
 file_id <- paste0(
   "Shape1_", params$shape1, 
-  "_Rate1_", params$rate1,
+  "_Rate1_", round(params$rate1, digits = 3),
   "_Shape2_", params$shape2, 
-  "_Rate2_", params$rate2,
+  "_Rate2_", round(params$rate2, digits = 3),
   "_Cens_", params$cens,
   "_Marg_", params$marg,
   ".rds"
@@ -84,7 +84,7 @@ power <- lapply(n_seq, function(n) {
     shape2 = params$shape2,
     rate2 = params$rate2,
     margin = params$marg,
-    reps = 50
+    info_reps = 50
   )
   
   # Simulation.
@@ -96,7 +96,7 @@ power <- lapply(n_seq, function(n) {
     shape2 = params$shape2,
     rate2 = params$rate2,
     margin = params$marg,
-    reps = params$reps
+    info_reps = params$reps
   )
   
   # Output.

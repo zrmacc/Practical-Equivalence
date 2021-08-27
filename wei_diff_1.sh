@@ -1,6 +1,5 @@
 #!/bin/bash
-#fin=Configs/Testing.txt
-fin=Configs/EquivProb.txt
+fin=Configs/wei_diff_1.txt
 
 sed 1d ${fin} | while read line
 do
@@ -20,5 +19,5 @@ do
 	--cens ${cens} \
 	--marg ${marg} \
 	--reps 500 \
-	--out "Simulations/EquivProb";
+	--out "Simulations/WeiDiff1";
 done

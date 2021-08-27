@@ -7,7 +7,7 @@
 #' @param shape1 Shape parameter for arm 1.
 #' @param shape2 Shape parameter for arm 2.
 #' @param margin Equivlence margin.
-#' @param reps Simulation replicates. 
+#' @param info_reps Simulation replicates. 
 #' @return Numeric equivalence probability.
 
 EmpEquiProb <- function(
@@ -18,10 +18,10 @@ EmpEquiProb <- function(
   shape1,
   shape2,
   margin = 0,
-  reps = 100
+  info_reps = 100
 ) {
   
-  sim <- sapply(seq_len(reps), function(x) {
+  sim <- sapply(seq_len(info_reps), function(x) {
     
     # Generate data.
     data1 <- Temporal::GenData(n, "weibull", theta = c(shape1, rate1), p = cens_prop)
@@ -40,5 +40,5 @@ EmpEquiProb <- function(
       return(out)
     }
   })
-  return(mean(sim))
+  return(mean(sim, na.rm = TRUE))
 }

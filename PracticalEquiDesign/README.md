@@ -101,7 +101,7 @@ sprintf("Sample size: %d.", n)
 
 ## Weibull Specification
 
-Given the survival probabilities at two distinct time points, the function `WeibullSpec` determines the corresponding shape and rate parameter. For example, suppose the anticipated survival at `t1 = 6` months is 80\% and that at `t2 = 12` months is 50\%. The corresponding Weibull distribution has shape and rate:
+Given the survival probabilities at two distinct time points, the function `WeibullSpec` determines the shape and rate parameter of the corresponding Weibull distribution. For example, suppose the anticipated survival at `t1 = 6` months is 80\% and that at `t2 = 12` months is 50\%. The corresponding Weibull distribution has shape and rate:
 
 ```r
 theta <- WeibullSpec(t1 = 6, p1 = 0.8, t2 = 12, p2 = 0.5)

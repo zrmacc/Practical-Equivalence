@@ -47,3 +47,14 @@ test_that("Check Weibull standard error calculation.", {
   expect_equal(se, exp, tolerance = 1e-8)
   
 })
+
+
+# Test Weibull specification.
+test_that("Check specification of Weibull from time points.", {
+  
+  theta <- WeibullSpec(t1 = 6, p1 = 0.8, t2 = 12, p2 = 0.5)
+  surv <- Temporal::SurvFunc(dist = "weibull", theta = theta)
+  expect_equal(0.8, surv(6), ignore_attr = TRUE)
+  expect_equal(0.5, surv(12), ignore_attr = TRUE)
+  
+})

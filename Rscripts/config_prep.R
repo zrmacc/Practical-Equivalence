@@ -1,5 +1,39 @@
 # Purpose: Prepare simulation configuration.
-# Updated: 2021-08-26
+# Updated: 2021-09-17
+
+# -----------------------------------------------------------------------------
+# Main text simulations.
+# -----------------------------------------------------------------------------
+
+# Shape.
+shape1 <- 1.0
+shape2 <- 1.0
+
+# Rate.
+rate1 <- log(2) / 6
+rate2 <- log(2) / 9
+
+# Censoring proportion.
+cens <- c(0, 0.2)
+
+# Margin.
+marg <- c(1.0)
+
+# Configuration frame.
+config <- expand.grid(
+  shape1 = shape1,
+  shape2 = shape2,
+  rate1 = rate1,
+  rate2 = rate2,
+  cens = cens,
+  marg = marg
+)
+
+data.table::fwrite(
+  x = config,
+  file = "Configs/main.txt",
+  sep = "\t"
+)
 
 # -----------------------------------------------------------------------------
 # Equivalent Exponentials. 

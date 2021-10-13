@@ -69,8 +69,8 @@ PlotEquiProbSim <- function(
       aes(x = n, y = y, color = Method)
     ) + 
     ggplot2::labs(
-      x = "Sample Size",
-      y = "Equivalence\nProbability",
+      x = "Sample Size per Arm",
+      y = "Probability of Selecting\nMore Efficacious Treatment",
       title = title
     ) + 
     ggplot2::scale_color_manual(
@@ -86,12 +86,11 @@ PlotEquiProbSim <- function(
   return(q)
 }
 
-
 # -----------------------------------------------------------------------------
-# Exponential: No difference.
+# Main text.
 # -----------------------------------------------------------------------------
 
-files <- file.path("Simulations/ExpNoDiff", dir(path = "Simulations/ExpNoDiff/"))
+files <- file.path("Simulations/Main", dir(path = "Simulations/Main/"))
 
 plot_list <- lapply(files, function(file) {
   data <- readRDS(file)
@@ -111,7 +110,43 @@ plot_panel <- cowplot::plot_grid(
 )
 
 cowplot::ggsave2(
-  file = "Figures/exp_no_diff.png",
+  file = "Figures/main.png",
+  plot = plot_panel,
+  device = "png",
+  width = 8,
+  height = 2,
+  units = "in",
+  scale = 2,
+  dpi = 480
+)
+
+
+
+# -----------------------------------------------------------------------------
+# Exponential: No difference.
+# -----------------------------------------------------------------------------
+
+files <- file.path("Simulations/ExpDiff0", dir(path = "Simulations/ExpDiff0/"))
+
+plot_list <- lapply(files, function(file) {
+  data <- readRDS(file)
+  if (is.null(data$n)) {data$n <- seq(from = 5, to = 100, by = 5)}
+  q <- PlotEquiProbSim(
+    data, 
+    title = PlotTitle(data),
+    y_lim = c(0, 1)
+  )
+  return(q)
+})
+
+plot_panel <- cowplot::plot_grid(
+  plotlist = plot_list,
+  byrow = TRUE,
+  ncol = 2
+)
+
+cowplot::ggsave2(
+  file = "Figures/exp_diff_0.png",
   plot = plot_panel,
   device = "png",
   width = 8,
@@ -126,7 +161,7 @@ cowplot::ggsave2(
 # Weibull: No difference.
 # -----------------------------------------------------------------------------
 
-files <- file.path("Simulations/WeiNoDiff", dir(path = "Simulations/WeiNoDiff/"))
+files <- file.path("Simulations/WeiDiff0", dir(path = "Simulations/WeiDiff0/"))
 
 plot_list <- lapply(files, function(file) {
   data <- readRDS(file)
@@ -146,7 +181,7 @@ plot_panel <- cowplot::plot_grid(
 )
 
 cowplot::ggsave2(
-  file = "Figures/wei_no_diff.png",
+  file = "Figures/wei_diff_0.png",
   plot = plot_panel,
   device = "png",
   width = 8,

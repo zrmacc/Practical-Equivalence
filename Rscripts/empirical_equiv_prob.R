@@ -21,7 +21,7 @@ EmpEquiProb <- function(
   info_reps = 100
 ) {
   
-  sim <- sapply(seq_len(info_reps), function(x) {
+  sim <- lapply(seq_len(info_reps), function(x) {
     
     # Generate data.
     data1 <- Temporal::GenData(n, "weibull", theta = c(shape1, rate1), p = cens_prop)
@@ -40,5 +40,6 @@ EmpEquiProb <- function(
       return(out)
     }
   })
+  sim <- do.call(c, sim)
   return(mean(sim, na.rm = TRUE))
 }

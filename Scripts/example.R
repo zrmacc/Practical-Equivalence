@@ -81,3 +81,73 @@ ggplot2::ggsave(
   units = "in",
   dpi = 360
 )
+
+# -----------------------------------------------------------------------------
+
+theta0 <- PracticalEquiDesign::WeibullSpec(6, 0.8, 12, 0.5)
+theta1 <- PracticalEquiDesign::WeibullSpec(7.2, 0.8, 16, 0.5)
+
+PracticalEquiDesign::SampleSize(
+  cens_prop = 0.2,
+  shape1 = theta0['shape'],
+  rate1 = theta0['rate'],
+  shape2 = theta1['shape'],
+  rate2 = theta1['rate'],
+  min_n = 5,
+  max_n = 100,
+  target_prob = 0.8,
+  margin = 2
+)
+
+# -----------------------------------------------------------------------------
+
+theta1 <- PracticalEquiDesign::WeibullSpec(6.0, 0.8, 16, 0.5)
+
+# 2 month margin.
+set.seed(101)
+PracticalEquiDesign::SampleSize(
+  cens_prop = 0.2,
+  shape1 = theta0['shape'],
+  rate1 = theta0['rate'],
+  shape2 = theta1['shape'],
+  rate2 = theta1['rate'],
+  min_n = 5,
+  max_n = 100,
+  target_prob = 0.8,
+  margin = 2,
+  info_reps = 200
+)
+
+# -----------------------------------------------------------------------------
+
+theta1 <- PracticalEquiDesign::WeibullSpec(6.0, 0.8, 16, 0.5)
+
+# 1 month margin.
+set.seed(101)
+PracticalEquiDesign::SampleSize(
+  cens_prop = 0.2,
+  shape1 = theta0['shape'],
+  rate1 = theta0['rate'],
+  shape2 = theta1['shape'],
+  rate2 = theta1['rate'],
+  min_n = 5,
+  max_n = 100,
+  target_prob = 0.8,
+  margin = 1,
+  info_reps = 200
+)
+
+# 3 month margin.
+set.seed(101)
+PracticalEquiDesign::SampleSize(
+  cens_prop = 0.2,
+  shape1 = theta0['shape'],
+  rate1 = theta0['rate'],
+  shape2 = theta1['shape'],
+  rate2 = theta1['rate'],
+  min_n = 5,
+  max_n = 100,
+  target_prob = 0.8,
+  margin = 3,
+  info_reps = 200
+)

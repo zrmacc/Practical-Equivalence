@@ -63,8 +63,8 @@ ProbCurve <- function(
   }
   
   # Define wrapper function for equivalence probability as a function of n.
-  EquiProbN <- function(n) {
-    out <- EquiProb(
+  SupProbN <- function(n) {
+    out <- SupProb(
       cens_prop = cens_prop,
       n = n,
       shape1 = shape1,
@@ -84,7 +84,7 @@ ProbCurve <- function(
   sample_sizes <- seq(from = min_n, to = max_n, by = delta)
   df <- data.frame(
     n = sample_sizes,
-    prob = sapply(sample_sizes, EquiProbN)
+    prob = sapply(sample_sizes, SupProbN)
   )
   
   # Plotting.

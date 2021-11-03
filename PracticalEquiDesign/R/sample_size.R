@@ -60,8 +60,8 @@ SampleSize <- function(
   }
   
   # Define wrapper function for equivalence probability as a function of n.
-  EquiProbN <- function(n) {
-    out <- EquiProb(
+  SupProbN <- function(n) {
+    out <- SupProb(
       cens_prop = cens_prop,
       n = n,
       shape1 = shape1,
@@ -76,7 +76,7 @@ SampleSize <- function(
   }
   
   # Check that the target probability is attainable.
-  prob_max_n <- EquiProbN(max_n)
+  prob_max_n <- SupProbN(max_n)
   
   if (prob_max_n < target_prob) {
     fail_message <- paste0(
@@ -91,10 +91,10 @@ SampleSize <- function(
   
   # Determine sample size.
   n <- min_n
-  prob_n <- EquiProbN(n)
+  prob_n <- SupProbN(n)
   while(prob_n < target_prob) {
     n <- n + 1
-    prob_n <- EquiProbN(n) 
+    prob_n <- SupProbN(n) 
   }
   return(n)
 }

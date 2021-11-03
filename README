@@ -3,13 +3,3 @@ R package performing sample size calculation for the practical equivalence desig
 
 # Rscripts
 Simulation code.
-
-# Exponential simulations.
-sh exp_diff_0.sh
-sh exp_diff_1.sh
-sh exp_diff_3.sh
-
-# Weibull simulations.
-sh wei_diff_0.sh
-sh wei_diff_1.sh
-sh wei_diff_3.sh

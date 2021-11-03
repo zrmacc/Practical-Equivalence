@@ -1,7 +1,7 @@
 # Practical Equivalence Design
 
 Zachary McCaw <br>
-Updated: 2021-10-13
+Updated: 2021-11-02
 
 
 
@@ -48,7 +48,7 @@ Probability of selecting the more-effective treatment at the recommended sample 
 
 ```r
 set.seed(101)
-prob <- EquiProb(
+prob <- SupProb(
   n = n,
   med1 = 6,
   med2 = 8,

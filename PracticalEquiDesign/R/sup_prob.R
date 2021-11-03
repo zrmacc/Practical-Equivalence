@@ -137,10 +137,10 @@ WeiMedSE <- function(info, n, shape, rate) {
 }
 
 
-#' Practical Equivalence Probability
+#' Superiority Probability
 #' 
-#' Equivalence probability, as pr(median2 - median1 >= margian) 
-#' + 0.5 * pr(abs(median2 - median1) < margin).
+#' Probability of selecting the more effective treatment as 
+#' pr(median2 - median1 >= margin) + 0.5 * pr(abs(median2 - median1) < margin).
 #' 
 #' @param cens_prop Expected censoring proportion.
 #' @param n Sample size.
@@ -161,7 +161,7 @@ WeiMedSE <- function(info, n, shape, rate) {
 #' @return Numeric equivalence probability.
 #' @export 
 
-EquiProb <- function(
+SupProb <- function(
   cens_prop,
   n,
   med1 = NULL,

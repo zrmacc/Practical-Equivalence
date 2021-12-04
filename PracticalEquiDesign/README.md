@@ -104,7 +104,7 @@ show(round(theta1, digits = 3))
 ## 1.635 0.067
 ```
 
-For the comparator arm, suppose the anticipated survival at `t1 = 6` months is 80\%, but that the median survival is `t2 = 14`. The corresponding Weibull is:
+For the comparator arm, suppose the anticipated survival at `t1 = 6` months is 80\%, but that the median survival is `t2 = 14` months. The corresponding Weibull is:
 
 ```r
 theta2 <- WeibullSpec(t1 = 6, p1 = 0.8, t2 = 14, p2 = 0.5)

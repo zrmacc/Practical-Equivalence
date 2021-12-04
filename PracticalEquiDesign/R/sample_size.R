@@ -1,7 +1,18 @@
 # Purpose: Determine the sample size needed for a pre-specified probability of 
-# Updated: 2021-07-22
+# selecting the superior treatment.
+# Updated: 2021-12-04
 
 #' Sample Size Estimation
+#' 
+#' Estimate the sample size for a practical equivalence trial with a time to
+#' event endpoint. The sample size is determined by specifying the time to event
+#' distribution of each treatment arm, the margin of practical equivalence, and
+#' the desired probability of selecting the superior treatment. The distribution
+#' in each treatment arm may be specified either by providing the median, in
+#' which case the time to event is assumed to be exponential, or by specifying
+#' the shape and rate of a Weibull distribution. For guidance on how to set the
+#' shape and rate parameters when using a Weibull calculation, see
+#' \code{\link{WeibullSpec}}.
 #' 
 #' @param cens_prop Expected censoring proportion.
 #' @param med1 Median for treatment arm 1, assuming shape1 is 1. Overwrites
@@ -20,9 +31,34 @@
 #' @param target_prob Probability of selecting the more effective treatment.
 #' @param use_exp_calc If both shape parameters are 1, should the calculations
 #'   be performed assuming an exponential distribution for the time to event in
-#'   each arm?
+#'   each arm? Default is TRUE.
 #' @return Integer sample size.
 #' @export
+#' @examples 
+#' # Sample size calculation based on exponentials. 
+#' n <- SampleSize(
+#'   cens_prop = 0.15,
+#'   med1 = 9,
+#'   med2 = 12
+#' )
+#' 
+#' # Sample size calculation based on exponentials with a 2 month margin.
+#' # Note that the required sample size is expected to increase.
+#' n <- SampleSize(
+#'   cens_prop = 0.15,
+#'   med1 = 9,
+#'   med2 = 12,
+#'   margin = 2
+#' )
+#' 
+#' # Sample size calculation based on Weibulls. 
+#' n <- SampleSize(
+#'   cens_prop = 0.15,
+#'   shape1 = 2.8,
+#'   rate1 = 0.10,
+#'   shape2 = 4.0,
+#'   rate2 = 0.08
+#' )
 
 SampleSize <- function(
   cens_prop = 0.0,

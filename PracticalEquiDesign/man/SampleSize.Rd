@@ -50,11 +50,45 @@ matrix.}
 
 \item{use_exp_calc}{If both shape parameters are 1, should the calculations
 be performed assuming an exponential distribution for the time to event in
-each arm?}
+each arm? Default is TRUE.}
 }
 \value{
 Integer sample size.
 }
 \description{
-Sample Size Estimation
+Estimate the sample size for a practical equivalence trial with a time to
+event endpoint. The sample size is determined by specifying the time to event
+distribution of each treatment arm, the margin of practical equivalence, and
+the desired probability of selecting the superior treatment. The distribution
+in each treatment arm may be specified either by providing the median, in
+which case the time to event is assumed to be exponential, or by specifying
+the shape and rate of a Weibull distribution. For guidance on how to set the
+shape and rate parameters when using a Weibull calculation, see
+\code{\link{WeibullSpec}}.
+}
+\examples{
+# Sample size calculation based on exponentials. 
+n <- SampleSize(
+  cens_prop = 0.15,
+  med1 = 9,
+  med2 = 12
+)
+
+# Sample size calculation based on exponentials with a 2 month margin.
+# Note that the required sample size is expected to increase.
+n <- SampleSize(
+  cens_prop = 0.15,
+  med1 = 9,
+  med2 = 12,
+  margin = 2
+)
+
+# Sample size calculation based on Weibulls. 
+n <- SampleSize(
+  cens_prop = 0.15,
+  shape1 = 2.8,
+  rate1 = 0.10,
+  shape2 = 4.0,
+  rate2 = 0.08
+)
 }

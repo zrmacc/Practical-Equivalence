@@ -44,7 +44,7 @@ matrix.}
 
 \item{use_exp_calc}{If both shape parameters are 1, should the calculations
 be performed assuming an exponential distribution for the time to event in
-each arm?}
+each arm? Default is TRUE.}
 }
 \value{
 Numeric equivalence probability.
@@ -52,4 +52,34 @@ Numeric equivalence probability.
 \description{
 Probability of selecting the more effective treatment as 
 pr(median2 - median1 >= margin) + 0.5 * pr(abs(median2 - median1) < margin).
+}
+\examples{
+# Calculation in the case of exponentials with no margin.
+prob <- SupProb(
+  cens_prop = 0.15,
+  n = 100,
+  med1 = 9,
+  med2 = 12,
+)
+
+# Calculation in the case of exponentials with a 2 month margin.
+# The probability should be lower than in the absence of a margin.
+prob <- SupProb(
+  cens_prop = 0.15,
+  n = 100,
+  med1 = 9,
+  med2 = 12,
+  margin = 2
+)
+
+# Calculation in the case of Weibulls with a 2 month margin.
+prob <- SupProb(
+  cens_prop = 0.15,
+  n = 100,
+  shape1 = 2.8,
+  rate1 = 0.10,
+  shape2 = 4.0,
+  rate2 = 0.08,
+  margin = 2
+)
 }

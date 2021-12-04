@@ -1,7 +1,10 @@
-# Purpose: Plot the probability of selecting the best treatment as a function of n. 
-# Updated: 2021-07-22
+# Purpose: Plot the sample size curve.
+# Updated: 2021-12-04
 
 #' Plot Sample Size Curve
+#' 
+#' Plot the probability of selecting the superior treatment as a function of
+#' the sample size n. 
 #' 
 #' @param cens_prop Expected censoring proportion.
 #' @param med1 Median for treatment arm 1, assuming shape1 is 1. Overwrites
@@ -23,8 +26,17 @@
 #'   be performed assuming an exponential distribution for the time to event in
 #'   each arm?
 #' @return ggplot object.
-#' @importFrom ggplot2 aes
 #' @export
+#' @examples 
+#' # Plot the selection probability curve for the case of two exponentials
+#' # with medians of 9 and 12 (e.g.) months, and a 2 month margin of
+#' # practical equivalence.
+#' q <- ProbCurve(
+#'   cens_prop = 0.15,
+#'   med1 = 9,
+#'   med2 = 12,
+#'   margin = 2.0
+#' )
 
 ProbCurve <- function(
   cens_prop = 0.0,
@@ -95,12 +107,16 @@ ProbCurve <- function(
       panel.grid.minor = ggplot2::element_blank()
     ) +
     ggplot2::geom_hline(
-      aes(yintercept = target_prob),
+      ggplot2::aes(yintercept = target_prob),
       color = "gray",
       linetype = "dotted"
     ) + 
+    ggplot2::geom_line(
+      ggplot2::aes(x = n, y = prob),
+      color = "#4285F4"
+    ) + 
     ggplot2::geom_point(
-      aes(x = n, y = prob),
+      ggplot2::aes(x = n, y = prob),
       color = "#4285F4"
     ) + 
     ggplot2::labs(

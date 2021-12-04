@@ -13,14 +13,18 @@ WeibullSpec(t1, p1, t2, p2)
 
 \item{t2}{Second time point.}
 
-\item{p2}{Probability at the send time point.}
+\item{p2}{Probability at the second time point.}
 }
 \value{
 Numeric vector containing the shape and rate.
 }
 \description{
-Calculate shape and rate of weibull distribution from two quantiles.
+Calculate shape and rate of a Weibull distribution from the value
+of the survival curve at 2 time points.
 }
 \examples{
+# Determine the shape and rate parameter of a Weibull distribution
+# where survival at 6 (e.g.) months is 80\%, and survival at 12
+# months is 50\%.
 theta <- WeibullSpec(t1 = 6, p1 = 0.8, t2 = 12, p2 = 0.5)
 }

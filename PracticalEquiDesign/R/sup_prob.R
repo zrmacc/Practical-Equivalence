@@ -4,6 +4,8 @@
 
 #' Quadratic Form
 #' 
+#' Calculate the quadratic form q(x) = x'Ax. 
+#' 
 #' @param x Numeric vector.
 #' @param A Numeric matrix.
 #' @return Numeric scalar.
@@ -18,10 +20,16 @@ QF <- function(x, A) {
 
 #' Weibull Median
 #' 
+#' Calculate the median of a Weibull distribution from the shape and rate.
+#' 
 #' @param shape Shape parameter, `alpha`.
 #' @param rate Rate parameter, `lambda`.
 #' @return Numeric median.
 #' @export
+#' @examples 
+#' # In the case of shape = 1 and rate = 1, the distribution
+#' # is exponential, and the median is log(2).
+#' med <- WeiMed(shape = 1, rate = 1)
 
 WeiMed <- function(shape, rate) {
   mu <- (1 / rate) * exp(log(log(2)) / shape)
@@ -31,7 +39,8 @@ WeiMed <- function(shape, rate) {
 
 #' Weibull Information Matrix.
 #' 
-#' Information matrix for the Weibull shape and rate parameters.
+#' Calculate the 2x2 information matrix for the Weibull shape and rate
+#' parameters.
 #' 
 #' @param data Data.frame.
 #' @param shape Shape parameter, alpha.
@@ -83,7 +92,8 @@ WeiInfo <- function(
 
 #' Weibull Average Information
 #' 
-#' Estimate the expected information as the average observed information.
+#' Estimate the expected information as the average value of the observed
+#' information across `reps` realizations of the data.
 #' 
 #' @param cens_prop Censoring proportion.
 #' @param n Sample size.
@@ -91,7 +101,6 @@ WeiInfo <- function(
 #' @param rate Rate parameter `lambda`.
 #' @param reps Replicates to average.
 #' @return Numeric information matrix for shape and rate.
-#' @noRd 
 
 WeiAvgInfo <- function(cens_prop, n, shape, rate, reps = 10) {
   sim <- lapply(seq_len(reps), function(x) {
@@ -106,6 +115,9 @@ WeiAvgInfo <- function(cens_prop, n, shape, rate, reps = 10) {
 
 #' Exponential Median SE
 #' 
+#' Standard error of the median of an exponential distribution
+#' with estimated rate parameter.
+#' 
 #' @param cens_prop Expected censoring proportion.
 #' @param n Sample size.
 #' @param rate Rate parameter `lambda`.
@@ -119,6 +131,9 @@ ExpMedSE <- function(cens_prop, n, rate) {
 
 
 #' Weibull Median SE
+#' 
+#' Standard error of the median of a Weibull distribution with
+#' estimated shape and rate parameters.
 #' 
 #' @param info Information matrix.
 #' @param n Sample size.
@@ -157,9 +172,38 @@ WeiMedSE <- function(info, n, shape, rate) {
 #' @param margin Margin of practical equivalence.
 #' @param use_exp_calc If both shape parameters are 1, should the calculations
 #'   be performed assuming an exponential distribution for the time to event in
-#'   each arm?
+#'   each arm? Default is TRUE.
 #' @return Numeric equivalence probability.
 #' @export 
+#' @examples 
+#' # Calculation in the case of exponentials with no margin.
+#' prob <- SupProb(
+#'   cens_prop = 0.15,
+#'   n = 100,
+#'   med1 = 9,
+#'   med2 = 12,
+#' )
+#' 
+#' # Calculation in the case of exponentials with a 2 month margin.
+#' # The probability should be lower than in the absence of a margin.
+#' prob <- SupProb(
+#'   cens_prop = 0.15,
+#'   n = 100,
+#'   med1 = 9,
+#'   med2 = 12,
+#'   margin = 2
+#' )
+#' 
+#' # Calculation in the case of Weibulls with a 2 month margin.
+#' prob <- SupProb(
+#'   cens_prop = 0.15,
+#'   n = 100,
+#'   shape1 = 2.8,
+#'   rate1 = 0.10,
+#'   shape2 = 4.0,
+#'   rate2 = 0.08,
+#'   margin = 2
+#' )
 
 SupProb <- function(
   cens_prop,

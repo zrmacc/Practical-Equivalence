@@ -1,13 +1,13 @@
 # Practical Equivalence Design
 
 Zachary McCaw <br>
-Updated: 2021-11-02
+Updated: 2021-12-04
 
 
 
 ### Description
 
-This package performs sample size estimation for designing a practical equivalence trial. The sample size calculation is based on a Weibull distribution for the time to event in each treatment arm. The Weibull distribution is parameterized in terms of the shape parameter $\alpha$ and the rate parameter $\lambda$:
+This package performs sample size estimation for designing a practical equivalence trial with a time to event endpoint. The sample size calculation is based on a Weibull distribution for the time to event in each treatment arm. The Weibull distribution is parameterized in terms of the shape parameter $\alpha$ and the rate parameter $\lambda$:
 
 $$
 f(t) = \alpha\lambda (\lambda t)^{\alpha - 1}e^{-(\lambda t)^{\alpha}}.

@@ -15,5 +15,10 @@ WeiMed(shape, rate)
 Numeric median.
 }
 \description{
-Weibull Median
+Calculate the median of a Weibull distribution from the shape and rate.
+}
+\examples{
+# In the case of shape = 1 and rate = 1, the distribution
+# is exponential, and the median is log(2).
+med <- WeiMed(shape = 1, rate = 1)
 }

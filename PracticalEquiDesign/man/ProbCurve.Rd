@@ -59,5 +59,17 @@ each arm?}
 ggplot object.
 }
 \description{
-Plot Sample Size Curve
+Plot the probability of selecting the superior treatment as a function of
+the sample size n.
+}
+\examples{
+# Plot the selection probability curve for the case of two exponentials
+# with medians of 9 and 12 (e.g.) months, and a 2 month margin of
+# practical equivalence.
+q <- ProbCurve(
+  cens_prop = 0.15,
+  med1 = 9,
+  med2 = 12,
+  margin = 2.0
+)
 }

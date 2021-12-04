@@ -21,7 +21,10 @@ Imports:
 	Temporal,
 	tidyr
 RoxygenNote: 7.1.1
+VignetteBuilder: 
+	R.rsp
 Suggests: 
+	R.rsp,
 	testthat (>= 3.0.0),
 	withr
 Config/testthat/edition: 3
